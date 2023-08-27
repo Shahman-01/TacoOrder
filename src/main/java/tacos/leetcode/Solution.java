@@ -1,28 +1,49 @@
 package tacos.leetcode;
 
-import java.util.Arrays;
-import java.util.Stack;
+import java.util.*;
 
 class Solution {
 	public static void main(String[] args) {
-		int[] arr = {73,74,75,71,69,72,76,73};
-
-		System.out.println(Arrays.toString(new Solution().dailyTemperatures(arr)));
+		int target = 10;
+		int[] position = {0, 4, 2};
+		int[] speed = {2, 1, 3};
+		System.out.println(new Solution().carFleetSec(target, position, speed));
 	}
-	public int[] dailyTemperatures(int[] temperatures) {
-		Stack<Integer> stack = new Stack<>();
 
-		for (int i = 0; i < temperatures.length - 1; i++) {
-			stack.push(temperatures[i]);
-			if (temperatures[i] < temperatures[i + 1]) {
-				temperatures[i] = stack.size();
-				stack.pop();
+	private int carFleetSec(int target, int[] position, int[] speed) {
+		if (position.length == 1)
+			return 1;
+
+		Car[] cars = new Car[position.length];
+
+		for (int i = 0; i < speed.length; i++) {
+			cars[i] = new Car(position[i], speed[i]);
+		}
+
+		Arrays.sort(cars, (x, y) -> Integer.compare(y.position, x.position));
+
+		int res = 0;
+		double lastTime = 0;
+
+		for (Car car : cars) {
+			double arrivalTime = (target - car.position) / (double) car.speed;
+
+			if (arrivalTime > lastTime) {
+				res++;
+				lastTime = arrivalTime;
 			}
 		}
 
-		if (temperatures.length > 0)
-			temperatures[temperatures.length - 1] = 0;
+		return res;
+	}
 
-		return temperatures;
+	private static class Car {
+		public int position;
+		public int speed;
+
+		public Car(int position, int speed) {
+			this.position = position;
+			this.speed = speed;
+		}
 	}
 }
