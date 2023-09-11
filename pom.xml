@@ -53,7 +53,11 @@
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
 
-        <dependency> <groupId>com.h2database</groupId> <artifactId>h2</artifactId> <scope>runtime</scope>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.3.1</version> <!-- Use the latest version of the PostgreSQL JDBC driver -->
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
