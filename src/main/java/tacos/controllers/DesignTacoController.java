@@ -10,7 +10,7 @@ import tacos.models.Ingredient;
 import tacos.models.Ingredient.Type;
 import tacos.models.Taco;
 import tacos.models.TacoOrder;
-import tacos.repos.IngredientRepository;
+import tacos.dao.IngredientRepository;
 
 import javax.validation.Valid;
 import java.util.List;
