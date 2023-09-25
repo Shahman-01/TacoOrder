@@ -1,21 +1,25 @@
 package tacos.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 
 @Data
+@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 public class Ingredient {
+
 	@Id
-	private String id;
-	private String name;
-	private Type type;
+	private final String id;
+
+	private final String name;
+
+	@Enumerated(EnumType.STRING)
+	private final Type type;
 
 	public enum Type {
 		WRAP, PROTEIN, VEGGIES, CHEESE, SAUCE
