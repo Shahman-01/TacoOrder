@@ -36,3 +36,16 @@ CREATE TABLE IF NOT EXISTS Ingredient_Ref
     taco_key   BIGINT     NOT NULL,
     FOREIGN KEY (ingredient) REFERENCES Ingredient (id)
 );
+
+CREATE TABLE IF NOT EXISTS usr
+(
+    id          SERIAL PRIMARY KEY,
+    username    VARCHAR(255) NOT NULL,
+    password    VARCHAR(255) NOT NULL,
+    fullname    VARCHAR(255) NOT NULL,
+    street      VARCHAR(255) NOT NULL,
+    city        VARCHAR(255) NOT NULL,
+    state       VARCHAR(255) NOT NULL,
+    zip         VARCHAR(255) NOT NULL,
+    phonenumber VARCHAR(255) NOT NULL
+);
