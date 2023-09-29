@@ -11,12 +11,12 @@ import tacos.models.User;
 import java.util.Objects;
 
 @Service
-public class UserRepositoryUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
 	private JpaUserRepository userRepository;
 
 	@Autowired
-	public UserRepositoryUserDetailsService(JpaUserRepository userRepository) {
+	public UserDetailsServiceImpl(JpaUserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 
