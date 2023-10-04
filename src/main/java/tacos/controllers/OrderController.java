@@ -48,6 +48,8 @@ public class OrderController {
 			Model model) {
 		model.addAttribute("orders",
 				orderRepository.findAll());
+
+		log.info("Showed orderList");
 		return "orderList";
 	}
 
@@ -61,7 +63,7 @@ public class OrderController {
 
 		orderRepository.save(order);
 		sessionStatus.setComplete();
-
+		log.info("Made order");
 
 		return "redirect:/";
 	}

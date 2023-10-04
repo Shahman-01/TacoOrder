@@ -14,11 +14,10 @@ CREATE TABLE IF NOT EXISTS Taco_Order
 
 CREATE TABLE IF NOT EXISTS Taco
 (
-    id             SERIAL PRIMARY KEY,
-    name           VARCHAR(50) NOT NULL,
-    taco_order     BIGINT      NOT NULL,
-    taco_order_key BIGINT      NOT NULL,
-    created_at     TIMESTAMP   NOT NULL,
+    id             SERIAL PRIMARY KEY NOT NULL,
+    name           VARCHAR(50)        NOT NULL,
+    taco_order     BIGINT             NOT NULL,
+    created_at     TIMESTAMP          NOT NULL,
     FOREIGN KEY (taco_order) REFERENCES Taco_Order (id)
 );
 
@@ -27,14 +26,6 @@ CREATE TABLE IF NOT EXISTS Ingredient
     id   VARCHAR(4) PRIMARY KEY NOT NULL,
     name VARCHAR(25)            NOT NULL,
     type VARCHAR(10)            NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS Ingredient_Ref
-(
-    ingredient VARCHAR(4) NOT NULL,
-    taco       BIGINT     NOT NULL,
-    taco_key   BIGINT     NOT NULL,
-    FOREIGN KEY (ingredient) REFERENCES Ingredient (id)
 );
 
 CREATE TABLE IF NOT EXISTS usr

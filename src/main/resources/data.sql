@@ -1,5 +1,5 @@
 -- Truncate tables to delete all rows (similar to DELETE without WHERE clause)
-TRUNCATE Ingredient_Ref, Taco, Taco_Order, Ingredient;
+TRUNCATE Ingredient_Ref, Taco, Taco_Order, Ingredient CASCADE ;
 
 -- Insert records into the Ingredient table
 INSERT INTO Ingredient (id, name, type) VALUES ('FLTO', 'Flour Tortilla', 'WRAP');

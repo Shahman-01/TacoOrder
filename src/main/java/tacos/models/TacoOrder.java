@@ -1,6 +1,7 @@
 package tacos.models;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.CreditCardNumber;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
@@ -13,7 +14,9 @@ import java.util.List;
 
 @Data
 @Entity
+@Table(name = "taco_order")
 public class TacoOrder implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -22,7 +25,7 @@ public class TacoOrder implements Serializable {
 
 	private Date placedAt;
 
-	@NotBlank(message = "Delivery name is required")
+	@NotBlank(message = "Name is required")
 	private String deliveryName;
 
 	@NotBlank(message = "Street is required")
@@ -37,22 +40,34 @@ public class TacoOrder implements Serializable {
 	@NotBlank(message = "Zip code is required")
 	private String deliveryZip;
 
-	@NotBlank(message = "Not a valid credit card number")
+	@CreditCardNumber(message = "Not a valid credit card number")
 	private String ccNumber;
 
-	@Pattern(regexp = "^(0[1-9]|1[0-2])(/)([0-9][0-9])$", message = "Must be formatted MM.YY")
+	@Pattern(regexp="^(0[1-9]|1[0-2])([\\/])([1-9][0-9])$",
+			message="Must be formatted MM/YY")
 	private String ccExpiration;
 
-	@Digits(integer = 3, fraction = 0, message = "Invalid CVV")
+	@Digits(integer=3, fraction=0, message="Invalid CVV")
 	private String ccCVV;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Taco> tacos = new ArrayList<>();
+	@ManyToMany(targetEntity = Taco.class)
+	private List<Taco> tacos;
 
 	@ManyToOne
 	private User user;
 
 	public void addTaco(Taco taco) {
-		this.tacos.add(taco);
+		if(this.tacos == null) {
+			this.tacos = new ArrayList<Taco>();
+			this.tacos.add(taco);
+		}
+		else {
+			this.tacos.add(taco);
+		}
+	}
+
+	@PrePersist
+	void placedAt() {
+		this.placedAt = new Date();
 	}
 }

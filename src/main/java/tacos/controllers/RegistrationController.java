@@ -1,5 +1,6 @@
 package tacos.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import tacos.dao.JpaUserRepository;
 import tacos.security.RegistrationForm;
 
 @Controller
+@Slf4j
 @RequestMapping("/register")
 public class RegistrationController {
 	private JpaUserRepository userRepository;
@@ -29,6 +31,7 @@ public class RegistrationController {
 	@PostMapping
 	public String processRegistration(RegistrationForm form) {
 		userRepository.save(form.toUser(passwordEncoder));
+		log.info("Registered");
 		return "redirect:/login";
 	}
 }
