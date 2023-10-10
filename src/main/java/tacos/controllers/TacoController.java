@@ -1,7 +1,10 @@
 package tacos.controllers;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tacos.dao.TacoRepository;
 import tacos.models.Taco;
@@ -22,11 +25,28 @@ public class TacoController {
 	public Iterable<Taco> recentTacos() {
 		PageRequest page = PageRequest.of(
 				0, 12, Sort.by("createdAt").descending());
-		return tacoRepo.findAll(page).getContent();
+		return null;
 	}
 
 	@GetMapping("/{id}")
-	public Optional<Taco> getTaco(@PathVariable("id") Long id) {
-		return tacoRepo.findById(id);
+	public ResponseEntity<Taco> getTaco(@PathVariable("id") Long id) {
+		Optional<Taco> optTaco = tacoRepo.findById(id);
+		return optTaco.map(taco -> new ResponseEntity<>(taco, HttpStatus.OK))
+				.orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+
+	}
+
+	@PostMapping(consumes = "application/json")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Taco postTaco(@RequestBody Taco taco) {
+		return tacoRepo.save(taco);
+	}
+
+	@DeleteMapping("/{orderId}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void deleteTaco(@PathVariable("orderId") Long orderId) {
+		try {
+			tacoRepo.deleteById(orderId);
+		} catch (EmptyResultDataAccessException ignored) {}
 	}
 }
